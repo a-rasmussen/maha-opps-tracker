@@ -1,2 +1,2 @@
-# maha-opps-tracker-dashboard
+# maha-opps-tracker
 Dashboard for tracking MAHA 
