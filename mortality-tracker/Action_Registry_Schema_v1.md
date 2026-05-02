@@ -1,6 +1,6 @@
-# Kennedy Action Registry — Notion Database Schema v1.0
+# Kennedy Action Registry — Notion Database Schema v1.1
 
-**Status:** v1.0 DRAFT — 2026-04-26
+**Status:** v1.1 DRAFT — 2026-04-27 (synced to Project Instructions v1.1 and Research Protocol v1.1; database live in Notion as of 2026-04-27)
 **Project:** MAHA Mortality Tracker
 **Parent doc:** `MAHA_Mortality_Tracker_Project_Instructions_v1.md`
 **Used by:** Research Protocol v1.0 (capture pipeline)
@@ -16,8 +16,10 @@ Defines the Notion schema for the **Kennedy Action Registry** — the master log
 ## 2. Database identity
 
 - **Name:** Kennedy Action Registry
-- **Parent page:** MAHA Mortality Tracker (Notion workspace)
-- **ID prefix for entries:** `KAR-NNNN` (zero-padded 4-digit)
+- **Parent page:** MAHA Mortality Tracker — Notion page ID `34fb9126-7234-8132-82fb-d1befcb5ef37` ([link](https://www.notion.so/34fb91267234813282fbd1befcb5ef37))
+- **Database URL:** [https://www.notion.so/6772d26e9ed24047bef0ba653b718e7c](https://www.notion.so/6772d26e9ed24047bef0ba653b718e7c)
+- **Data source ID** (for programmatic access via Notion API/MCP): `24d2e420-e67b-4cd0-a07d-76500af40e72`
+- **ID prefix for entries:** `KAR` (Notion auto-increment with prefix; field name in DB: `Entry ID`)
 - **Entry creation:** via Research Protocol Section 6 capture workflow
 
 ---
@@ -260,7 +262,8 @@ Manual setup is fine for v1. Automation (Notion API for entry creation) can be b
 | Version | Date | Changes |
 |---|---|---|
 | v1.0 DRAFT | 2026-04-26 | Initial schema. 8 field groups, 12 views, 6 entry templates. Federated relations to MAHA Opps Tracker (read-only). |
+| v1.1 DRAFT | 2026-04-27 | Database created in Notion. Added live Notion page IDs / data source ID / database URL to Section 2. No schema changes — all 38 fields and relations from v1.0 implemented as specified. Synced to Project Instructions v1.1 and Research Protocol v1.1. |
 
 ---
 
-*End of Action Registry Schema v1.0 DRAFT.*
+*End of Action Registry Schema v1.1 DRAFT.*
