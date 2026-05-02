@@ -1,6 +1,6 @@
-# MAHA Mortality Tracker — Project Instructions v1.0
+# MAHA Mortality Tracker — Project Instructions v1.1
 
-**Status:** v1.0 DRAFT — 2026-04-26
+**Status:** v1.1 DRAFT — 2026-04-27 (updates v1.0 from 2026-04-26 with scope decisions, Substack tooling, infrastructure live)
 **Owner:** Angie Rasmussen (angierasmussen@gmail.com)
 **Public-facing site name:** Bobby Kennedy Jr. Body Count
 **Sister project:** [MAHA Opps Tracker](../) — independent research project, federated at the database level only.
@@ -154,7 +154,7 @@ Model registry tracked in Notion `Mortality Models` DB with: model name, version
 ---
 
 ## 9. Research Protocol
-See `Research_Protocol_v1.0.md`.
+See `Research_Protocol_v1.1.md`.
 
 ## 10. Mortality Assessment Protocol
 TBD — `assessment_protocol_v0.1.md` in development. Will define:
@@ -234,7 +234,7 @@ Detailed list lives in Sources Library Notion DB.
 
 | Phase | Duration (est.) | Output | Status |
 |---|---|---|---|
-| **0 — Setup** | This week | Project instructions, research protocol, schema docs, Notion DB structure, GitHub repo | In progress (this session) |
+| **0 — Setup** | 2026-04-26 to ongoing | Project instructions, research protocol, schema docs, Notion DB structure, GitHub repo | **Mostly done.** v1.1 docs in repo. Notion parent + Kennedy Action Registry live. 6 additional DBs pending (Mortality Assessments, Affected Populations, Mortality Models, Public Site Entries, Sources Library, Methodology Notes). |
 | **1 — Methodology proving case** | 4–6 weeks | Samoa 2019 Tier 1 case file, full assessment workflow demonstrated end-to-end | Not started |
 | **2 — Registry + first 10 assessments** | 8–12 weeks | Action Registry populated; 10 assessments mixing Tiers 1/2/3 (TX measles, ACIP MMRV, COVID vax recommendation, FL HepB, OBBBA Medicaid, DoW flu, 3 NIH trial halts, fluoride withdrawal) | Not started |
 | **3 — Public site launch** | 12–16 weeks | Site live with 10–15 entries; methodology pages; legal review complete | Not started |
@@ -258,7 +258,8 @@ Detailed list lives in Sources Library Notion DB.
 | Version | Date | Changes |
 |---|---|---|
 | v1.0 DRAFT | 2026-04-26 | Initial project instructions. Three-tier evidence framework. Federated Notion architecture. Phased roadmap. References Research Protocol v1.0 and Action Registry Schema v1. |
+| v1.1 DRAFT | 2026-04-27 | Synced to Research Protocol v1.1 reference. Updated Phase 0 status to reflect live Notion infrastructure (parent page + Kennedy Action Registry). Pre-HHS scope expanded broad. International scope in. Substack monitoring on Claude side via WebSearch (no user manual browsing). GitHub push workflow uses `push_to_github.py` script with fine-grained PAT (see project memory `feedback_github_push.md`). |
 
 ---
 
-*End of Project Instructions v1.0 DRAFT.*
+*End of Project Instructions v1.1 DRAFT.*
