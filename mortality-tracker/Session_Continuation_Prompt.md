@@ -6,62 +6,58 @@
 
 ## Part 1 — Setup instructions (do these first on the new device)
 
-### Step 1. Create a new Cowork project
-1. Open Cowork on the new device.
-2. Create a new project. Suggested name: **MAHA Mortality Tracker**.
+### The simple path (iCloud-synced project folder — recommended)
 
-### Step 2. Connect connectors
-- **Notion connector.** Sign in with your Notion account (`angierasmussen@gmail.com`). The Notion workspace and all 7 mortality tracker databases will be accessible automatically once authenticated — no per-database setup needed.
-- **GitHub connector** (optional). The GitHub MCP write path is unreliable. We use a script + PAT instead (Step 4).
+The project folder `~/Documents/Claude/Projects/MAHA Opps Tracker/` is iCloud-synced, so on the new device the entire project — including this continuation prompt, all schema docs, the push script, and the GitHub PAT — is already there. No clone, no copy, no PAT regeneration needed.
 
-### Step 3. Create local working folder
-Open Terminal on the new device and run:
-```bash
-mkdir -p ~/Documents/Claude/Projects/"MAHA Mortality Tracker"
-cd ~/Documents/Claude/Projects/"MAHA Mortality Tracker"
-git clone https://github.com/a-rasmussen/maha-opps-tracker.git repo
-```
+**Steps on the new device:**
 
-This gives you the canonical project docs in `~/Documents/Claude/Projects/MAHA Mortality Tracker/repo/mortality-tracker/`.
+1. **Wait for iCloud to finish syncing.** Open Finder, navigate to `~/Documents/Claude/Projects/MAHA Opps Tracker/` and confirm you see the `MAHA Mortality Tracker/` subfolder, the `.gh_pat` file (it's hidden — press ⌘⇧. to show hidden files), and `push_to_github.py`. If you don't see them, give iCloud a few minutes.
+2. **Create a new Cowork project** (suggested name: *MAHA Mortality Tracker*).
+3. **Sign in to the Notion connector** with your Notion account (`angierasmussen@gmail.com`). All 7 mortality tracker databases will be accessible immediately — no per-database setup.
+4. **Mount the iCloud folder** in the new Cowork project. Add `~/Documents/Claude/Projects/MAHA Opps Tracker/` (or just the `MAHA Mortality Tracker/` subfolder if you'd rather a tighter scope).
+5. **Paste Part 2 of this doc into the project's instructions panel.** That gives the new session the full project context.
+6. **Open a new chat and paste Part 3 as the first message.** That tells the new session to read this prompt, verify infrastructure access, and confirm the next-step decision.
 
-### Step 4. Set up GitHub push (PAT + script)
+That's it. Total time on the new device: ~3 minutes after iCloud has synced.
 
-Two options for the PAT:
+### The fallback path (iCloud not available, or you want a fresh PAT)
 
-**Option A — reuse the existing PAT** if the device-where-you-saved-it can be accessed. Copy the file from the original device's `~/Documents/Claude/Projects/MAHA Opps Tracker/.gh_pat` to the new device's `~/Documents/Claude/Projects/MAHA Mortality Tracker/.gh_pat`.
+If iCloud isn't an option (different account, sync disabled, etc.) or you'd rather not have the PAT live in iCloud for security reasons, do this instead:
 
-**Option B — generate a fresh PAT** (cleaner, recommended if devices aren't easily synced):
-1. Go to https://github.com/settings/personal-access-tokens → Generate new token (fine-grained).
-2. Name: `Claude MAHA push (device 2)`.
-3. Resource owner: `a-rasmussen`.
-4. Repository access: "Only select repositories" → `maha-opps-tracker`.
-5. **Expand "Repository permissions"** (collapsed by default — this is the gotcha):
-   - Contents: Read and write
-   - Metadata: Read-only (auto)
-6. Generate → copy the `github_pat_...` value.
-7. Save:
+1. Create new Cowork project.
+2. Sign in to Notion connector.
+3. In Terminal:
    ```bash
-   echo 'github_pat_YOUR_TOKEN_HERE' > ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/.gh_pat
-   chmod 600 ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/.gh_pat
+   mkdir -p ~/Documents/Claude/Projects/"MAHA Mortality Tracker"
+   cd ~/Documents/Claude/Projects/"MAHA Mortality Tracker"
+   git clone https://github.com/a-rasmussen/maha-opps-tracker.git repo
+   cp repo/mortality-tracker/push_to_github.py ./push_to_github.py
    ```
+4. Generate a fresh fine-grained PAT for `a-rasmussen/maha-opps-tracker`:
+   - https://github.com/settings/personal-access-tokens → Generate new (fine-grained)
+   - Name: `Claude MAHA push (device 2)`
+   - Resource owner: `a-rasmussen`
+   - Repository access: "Only select repositories" → `maha-opps-tracker`
+   - **Expand "Repository permissions"** (collapsed by default — this is the gotcha)
+     - Contents: Read and write
+     - Metadata: Read-only (auto)
+   - Generate, copy the `github_pat_...` value
+   - Save:
+     ```bash
+     echo 'github_pat_YOUR_TOKEN_HERE' > ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/.gh_pat
+     chmod 600 ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/.gh_pat
+     ```
+5. Mount `~/Documents/Claude/Projects/MAHA Mortality Tracker/` in the new Cowork project.
+6. Paste Part 2 into project instructions.
+7. Use Part 3 as your first message.
 
-Copy the push script into the local working folder:
-```bash
-cp ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/repo/mortality-tracker/push_to_github.py \
-   ~/Documents/Claude/Projects/"MAHA Mortality Tracker"/push_to_github.py
-```
-*(If the script isn't in the repo at that path, copy it manually from this device or recreate it from the project memory.)*
+### Security note on the iCloud path
 
-### Step 5. Mount the local folder in the new Cowork project
-- In the new Cowork project, add `~/Documents/Claude/Projects/MAHA Mortality Tracker/` as a mounted folder.
-
-### Step 6. Paste Part 2 below into the project's instructions panel
-Use Cowork's "Project instructions" or equivalent setting to paste the entire Part 2 below. That gives the new session the full context immediately.
-
-### Step 7. Start the session
-First message can be simply: *"Read the continuation prompt at `~/Documents/Claude/Projects/MAHA Mortality Tracker/repo/mortality-tracker/Session_Continuation_Prompt.md` and confirm you have access to all infrastructure listed there."*
-
-The session should verify GitHub access (`get_file_contents` on the repo), Notion access (`notion-fetch` on the parent page ID), and local file access before proceeding.
+Because the simple path puts `.gh_pat` (a fine-grained GitHub token) inside an iCloud-synced folder, the token is replicated to anywhere your iCloud account is signed in. Trade-off:
+- **Pro:** zero-friction cross-device access, no token regeneration.
+- **Con:** if your Apple ID is compromised, the GitHub PAT is exposed too. Mitigated by the PAT being fine-grained (read+write to one repo only — no broader account access) but worth knowing.
+- If concerned, follow the fallback path and revoke the original PAT once the new device has its own.
 
 ---
 
@@ -208,7 +204,9 @@ Once Cowork is set up per Part 1 and Part 2 is in the project instructions, open
 > Hi Claude — continuing the MAHA Mortality Tracker project on a new device.
 >
 > Please:
-> 1. Read `~/Documents/Claude/Projects/MAHA Mortality Tracker/repo/mortality-tracker/Session_Continuation_Prompt.md` to confirm you have full context.
+> 1. Read the continuation prompt. It's at one of these paths (iCloud path is primary; fallback path is the git clone):
+>    - `~/Documents/Claude/Projects/MAHA Opps Tracker/MAHA Mortality Tracker/Session_Continuation_Prompt.md` (iCloud-synced — try this first)
+>    - `~/Documents/Claude/Projects/MAHA Mortality Tracker/repo/mortality-tracker/Session_Continuation_Prompt.md` (fallback if I cloned the repo)
 > 2. Verify Notion access by fetching the parent page (ID `34fb9126-7234-8132-82fb-d1befcb5ef37`).
 > 3. Verify the GitHub push path works by listing files in the repo via `get_file_contents` and confirming `push_to_github.py` and `.gh_pat` exist locally.
 > 4. Once verified, summarize the current project status and ask me whether we're starting Phase 1A (Mortality Assessment Protocol) or 1B (Samoa case file) first.
